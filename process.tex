@@ -1,32 +1,52 @@
-\chapter{Development Process}
+\chapter{Utviklingsprossesen}
 \label{chap:process}
 
-This chapter would contain the process by which you worked on your thesis.  This gives an indication of the way in which the working environment effected the final product or result.
+\section{Verktøy}
+\subsection{Versjons kontroll}
+Vi bestemte oss tidlig om hvilken versjonskontroll vi skulle bruke, det var egentilg ikke en avslutting men noe vi begge visste vi skulle bruke før vi begynte på prosjektet. Gjennom skolen gangen har vi brukt git siden andre semester. Når vi skulle ta for oss tema om versjonskontroll var vi begge enige om å bruke git. Git er den eneste versjonkontrollen noen av oss har brukt, så velge et nytt verktøy vi ikke har erfaring med virket ulogisk og tungvint. \\ \\
+Vi valgte å hoste git repositoriet hos bitbucket, igjen fordi dette er det vi er vant til. Vi har såvidt prøvd github, men når vi satt opp repositoriet var det en vanesak å gå rett til bitbucket.
+\subsection{Tekst editor}
+Vi startet med å bruke Google docs som vår tekst editor. Vi valgte å jobbe på denne plattformen fordi vi ville ha en plattform vi kunne lett dele det som hadde blitt skrevet. Google Doc er i tillegg lett å ta i bruk det er ingen læringskurve i forhold til andre programmer som Latex. VI hadde originalt planlagt å bruke shareLatex som vår tekst editor. Vi hadde valgt å bruke denne løsningen fordi den ga oss muligheten til å dele dokumentet i tillegg til alle fordelene med Latex. Vi merket tidlig at en slik oppgave ikke passet i Google Docs, det var upraktisk og tregt å jobbe med store dokumenter i Google doc. Vi brukte da et dokument for hvert kapittel som var tungvint. Vi endte med å skrive de forskjellige kapitlene i hvert sitt Google Docs dokument for så å legge de inn i Latex. Vi valgte å gjøre det på denne måte fordi Latex gir et mye bedre slutt resultat enn Google Docs, men vi valgte å gjøre mesteparten av skrivingen i Google Docs fordi vi kunne lett skrive et utkast uten tanke på struktur. 
 
-For this example of usage we can talk about some of the tools we use and how to get them to integrate with \LaTeX.
+\subsection{IDE}
+Når vi startet dette prosjektet viste vi ikke hvilken plattform vi skulle jobbe i. Det eneste vi hadde bestemt oss for var at vi skulle skrive programvaren i Python. Python var et språk ingen av oss hadde jobbet med før så vi hadde ingen preferanser. Vi endte opp med å bruke Eclipse sin utvidelse PyDev. Vi valgte å bruke denne plattformen fordi den var godt anbefalt i av Python miljøet i tillegg til at vi hadde begge en liten kjennskap til Eclipse. \\ \\
+Vi trengte en måte å gjøre programvaren brukervennlig. Vi valgte derfor å ta i bruk Tkinter fordi det kom godt anbefalt i tillegg til at var kompatibelt med MatPlotLib. Vi så kort på qt som en mulighet for utvikling av GUI, men vi endte med Tkinter. Noe vi ikke var helt fornøyd med i ettertid på grunn av vanskeligheter til å plassere grafene på riktig plass. Vi fikk inn grafen fra MatPlotLib uten problemer, men etterhvert som vi implementert flere inputfelt og grafer  fikk vi ikke ting der vi ville. 
 
-\section{Figures and Diagrams}
-Diagrams, Figures, and graphs are very important as part of the visual presentation of your thesis.  There are many ways to generate graphical assets for your thesis. The ones presented below are just some of the ways you could use. There are many others, and unfortunately there is no best way of doing these this.
+Vi valgte å bruke MatPlotLib for å viste brukeren hvordan stjerneformen han valgte ville bli seendes ut. 
+\section{Problemer vi har møtt}
+\subsection{Minnekapasitet}
+Et problem vi møtte på tidlig var størrelsen på arrayen vår. Med Nammo sitt krav på høy nøyaktighet måtte vi ha en enorm mengde punkter. Dette ville gi problemer i 2D, men spesielt for videre utvikling til 3D. I oppgaven vår skulle vi lage en solid 2D versjon som kan bygges videre på. Vi kunne se dette ville bli et problem når programvaren skal kjøres på en vanlig arbeids laptop.\\ \\
+Vi tok problemet til veilederen der vi diskuterte problemet, etter en god stund kom vi frem til at hvis formen som skal skjæres ut er symmetrisk trenger vi ikke beregne hele formen, men i stedet bare en liten bit. Denne biten kunne da speiles, for en presentasjon. Vi kontaktet Nammo, som verifiserte at alle stjerneformede var symmetriske. Dette betyr at vi kan beregne en liten “kakebit” som kutter minneforbruket enormt. Vi så her at vi kunne dele opp formen på hver arm av stjernen. Så vi deler en arm i to biter, dette gjør at jo flere armer stjernen har, jo mindre er minneforbruket.
 
-\subsection{Graphs}
-The simplest way to generate graphs is also perhaps the ugliest.  That is to use Microsoft Excel and save the graph as a bitmap and then include it.
 
-\subsubsection{Microsoft Excel}
-\todo{include exampel fo using MS EXCEL}
 
-\subsubsection{Gnuplot}
-\todo{include example with code for gnuplot}
+\subsection{Implisit vs Eksplisit}
+Det største problemet vi møtte under denne oppgaven var desidert kollapsende vegger. Når en stjerneform brenner vil armene etterhvert krasje inn i hverandre og kollapse sammen. Dette skaper et stort problem for koden, fordi det er veldig vanskelig å vite om to punkter har krasjet eller om de holder på å kræsje. Vi har satt opp algoritmen så vi har en array med en rekke punkter, vi har ingen kontroll hvor de er i forhold til hverandre. Dette er det største problemet med eksplisitt løsning. Vi kunne gå over til en implisitt løsning som ville løst dette problemet, men det betydde at vi måtte begynne helt på nytt. i tillegg kommer en implisitt med en hel rekke nye problemer. \\ \\
+En implisitt løsning betyr at vi har en flate dekket med punkter som er satt til 0. Når brennflaten vokser forflytter den som over punktene og når den passerer et punkt, blir det satt til 1. ( trenger bilde som forklarer ) Det største problemet med denne er minneforbruket. Det hadde vært en god løsning hvis nøyaktighet hadde vært så viktig. Med Nammo sitt høye krav på nøyaktighet ville dette gi store problemer. Vi måtte bruke en enorm mengde punkter for at algoritmen skulle bli nøyaktig nok. Vi valgte derfor å holde oss til en eksplisitt løsning.\\ \\
+Måten vi valgte å løse dette problemet på var ved å bruke løsningen på minneforbruket. når vi delte opp formen laget vi en symmetrilinje. Vi vet at formen er symmetrisk dette gjør at vi kan håndtere de kollapsede veggene. Før hadde vi ikke kontroll over hvilke punkter som krysset hverandre. Dette gjorde at vi ikke ville klare å håndtere når veggene kollapset sammen. Når vi tar og deler stjerne armen på langs vet vi at den er identisk på den andre siden.\\ \\
 
-\subsection{Diagrams}
-Drawing UML diagrams and program flow is also often used by software development theses.
 
-\subsubsection{MetaUML}
-\todo{work a nice example of UML for those who want to have the UML diagrams}
 
-\subsubsection{Inkscape}
-A nice way to use Inkscape is to use the output to PDF and then the Latex option within the output.  This allows you to have all the nice text of Latex in the actual diagram. 
-\todo{worked example}
 
+
+
+
+
+
+
+
+
+\subsection{Symmetrilinjen}
+kanskje skrive mer \\ \\
+
+\subsection{Punkt forflytting vs linje forflytting} 
+Vi møtte på et uforventet problemer med forflytningen når vi begynte å nærme oss en ferdig prototype. Vi merket et problem rundt indre hjørner, et indrehjørne et hjørne som forflytter seg innover og holder sin vinkel, i motsetning til et yttrehjørne som vokser utover og får en mindre vinkel for hvert steg. Vi merket at det indre hjørnet ikke beholde vinkelen sin som den skal. Med vår punktvis forflytning, flytter alle punkter seg like langt. Dette skaper problemer i et indre hjørne, i et indre hjørne skal hjørne punktet flytte seg lengre enn de andre punktene for å beholde vinkelen sin. Med vår punktvis forflytning endte det med at hjørne punktet ble hengende igjen å lage en skarpere vinkel for hvert steg. For å løse dette problemet måtte vi endre den grunnleggende algoritmen i forflytningen.\\ \\
+Vi valgte å løse dette problemet med å skrive om den punktvise forflytningen til en versjon som flyttet linjestykkene i stedet for punktene. Som vist øverst til venstre på figur X flytter vi hele linjestykket i stedet for punktene. Dette løser problemet med indre hjørner. Vi flytter hele linjen og når de krysser hverandre kan vi finne krysningspunktet på linjene og legge det nye punktet der. Da vil det indre hjørnet beholde vinkelen sin for hvert steg. \\ \\
+Denne løsningen kom også med sine ulemper. Når et yttre hjørne forflytter seg minsker vinkelen dens, dette gjør at vi vil få tomrom mellom linjene våre. Så vi må legge på et lite linjestykke mellom hvert linjestykke i det yttre hjørne. Dette gjør at vi vil ha en eksponentiell økning av linjestykker i yttre hjørner. Vi måtte derfor modifisere algoritmen så den slår sammen linjestykker under en viss lengde for å minimere minneforbruket.\\ \\
+I tillegg ville denne løsningen komme med flere potensielle problemer. Hvis algoritmen møter en veldig skarp vinkel kan linjestykkene flytte seg for langt. Dette gjør at algoritmen ikke oppdager at den har krysset sin nabo og vil fortsette å vokse å lage en slags sløyfe form. Dette er veldig usannsynlig hendelse, men vi valgte å ta hensyn til den for å gjøre algoritmen så robust som mulig.\\ \\
+Måten vi løste dette på var ved å kjøre en for loop for hvert linjestykke i arrayen. Vi tar det linjestykke og sjekker om det krysser et annet linjestykke i arrayen. Hvis det krysser et annet linjestykke enn det ved siden av seg har det begynt på en sløyfeform.  
+
+ 
 
 
 
