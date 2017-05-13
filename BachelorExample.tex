@@ -12,6 +12,9 @@
 \usepackage{csvsimple}
 \usepackage{booktabs}
 \usepackage{multicol}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{pdfpages}
 
 \newcommand{\comment}[1]{\textcolor{blue}{\emph{#1}}}  %% use of the colour and you can see how to use commands with parts \comment{so what}
 
@@ -55,7 +58,6 @@
 
 \tableofcontents
 \listoffigures
-\listoftables
 
 
 \input{introduction}
@@ -70,10 +72,42 @@
 
 
 \bibliographystyle{ntnubachelorthesis}
-\bibliography{BachelorExample}
+\begin{thebibliography}{4}
+\bibitem{Python}
+    \emph{Python 2.7 license},
+    \url{https://www.python.org/download/releases/2.7/license/},
+    The Python Software Foundation,
+    2017-01-12
+\bibitem{TkInter}
+    \emph{Tkinter Overview},
+    \url{http://tkinter.unpythonic.net/wiki/Tkinter},
+    AustinSavoy,
+    2017-01-13
+\bibitem{Matplotlib}
+    \emph{License — Matplotlib 2.0.2 documentation},
+    \url{https://matplotlib.org/users/license.html},
+     Matplotlib development team,
+     2017-01-13
+\bibitem{Numpy}
+    \emph{NumPy license — NumPy},
+    \url{http://www.numpy.org/license.html},
+    NumPy developers,
+    2017-01-13
+\bibitem{FDD}
+    \emph{Feature-Driven Development (FDD)},
+    \url{http://www.step-10.com/SoftwareProcess/FeatureDrivenDevelopment/index.html},
+    Stephen R. Palmer,
+    2017-01-17
+\bibitem{Nammo}
+    \emph{Nammo AS. About us [website]},
+    \url{https://www.nammo.com/who-we-are/about-us/},
+    Nammo AS,
+    2017-01-23
+\end{thebibliography}
+
 
 \appendix %after this line all chapters will have leters instead of numbers
-%\input{projectplan}
+\input{projectplan}
 %\input{gantt}
 \input{meetinglog}
 %\input{progressreviews}
